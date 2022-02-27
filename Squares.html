@@ -1,0 +1,65 @@
+<!DOCTYPE html><!--表示文档类型为HTML文档-->
+<html>
+	<head><!--文档头部-->
+		<meta charset = "utf-8">
+		<title>2017031701059刘羽珩</title><!--文档标题，在网页标题栏显示-->
+	</head>
+	
+	<body><!--文档主体-->
+		<!--绘图区域的id，以及宽度和高度，用WebGL绘制的图形将显示在该canvas中-->
+		<canvas id = "webgl" width = "512" height = "512">
+		对不起，你的浏览器不支持HTML5的canvas元素！<!--出错时显示这句话-->
+		</canvas>
+		
+		</br>
+		仅导线可以拖动鼠标绘画</br>
+		其他元件只能一个个绘画</br>
+	
+		</br>
+		
+		<div>
+		<button id="Power">电池</button>
+		<button id="Resistance">电阻</button>
+		<button id="OpenClose">开关</button>
+		<button id="Light">小灯泡</button>
+		<button id="Line">导线</button>
+		
+		</div>
+	
+		<!--顶点Shader程序-->
+		<script id = "vertex-shader" type = "x-shader/x-vertex">
+		attribute vec3 a_Position;	//输入三维顶点坐标
+		attribute vec3 a_Color;		//输入顶点颜色
+		uniform mat4 u_matMVP;		//模视投影矩阵
+		varying vec4 v_Color;		//输出顶点颜色
+		void main()
+		{
+			//计算得到裁剪坐标系下的顶点坐标
+			gl_Position = u_matMVP * vec4(a_Position,1.0);
+			v_Color = vec4(a_Color,1.0); //输出四维顶点颜色
+		}
+		</script>
+	
+		<!--片元Shader程序-->
+		<script id = "fragment-shader" type = "x-shader/x-fragment">
+		precision mediump float; //浮点数精度为中等
+		varying vec4 v_Color;//输入颜色属性
+		void main()
+		{
+			gl_FragColor = v_Color;//指定片元颜色
+			//gl_FragColor = vec4(1.0,0.0,0.0,1.0);//指定片元颜色（红色）
+
+		}
+		</script>
+	
+		<!--下面是辅助我们进行程序编写的3个JavaScript程序-->
+		<script type = "text/javascript" src = "./Common/webgl-utils.js"></script>
+		<script type = "text/javascript" src = "./Common/initShaders.js"></script>
+		<script type = "text/javascript" src = "./Common/MV.js"></script>
+		
+		<!--主程序，JS文件名修改为与本html文件名一致-->
+		<script type = "text/javascript" src = "Squares.js"></script>
+	
+	</body>
+</html>
+	
